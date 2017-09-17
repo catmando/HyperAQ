@@ -7,6 +7,17 @@ class SprinkleList < Hyperloop::Component
   # if you do repeated calls to Sprinkle.all, it has cached the value
   # from the first time.
 
+  # after_mount do
+  #   ReactiveRecord.load do
+  #     # go get whatever data you want
+  #     Sprinkle.each do |row|
+  #       row.data
+  #     end
+  #   end.then do
+  #     try_sort
+  #   end
+  # end
+
   render(DIV) do
     H4 { "Sprinkles"}
 
@@ -63,7 +74,6 @@ class SprinkleList < Hyperloop::Component
   # cause the data to get re-sorted and redisplayed.
 
   def try_sort
-    # puts 'try_sort'
     # Sort the table if the first element next_start_time has changed
     if false && @next_start_time != @sprinkles[0].next_start_time
       @sprinkles.sort_by! {|s| s.next_start_time}
