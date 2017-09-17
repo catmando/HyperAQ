@@ -1,14 +1,13 @@
 require 'models/valve'
 
 class ValveButton < Hyperloop::Component
-  param :valve_id
+  param :valve
 
   def render
-    valve = Valve.find(params.valve_id)
     LI do
-      BUTTON(class: "btn #{state(valve)} navbar-btn") do
-        valve.name
-      end.on(:click) {command(valve.id)}
+      BUTTON(class: "btn #{state(params.valve)} navbar-btn") do
+        params.valve.name
+      end.on(:click) { command(params.valve.id) }
     end
   end
 
@@ -21,5 +20,14 @@ class ValveButton < Hyperloop::Component
   def state(valve)
     valve.cmd == 0 ? "btn-primary" : 'btn-success'
   end
+
+  # FYI this is a stylistic preference, but you could skip passing the valve around
+  # as its part of the ValveButton's instance data.  In otherwords:
+
+  def valve_state
+    params.valve.cmd == 0 ? 'btn-primary' : 'btn-success'
+  end
+
+  # same with command too
 
 end
